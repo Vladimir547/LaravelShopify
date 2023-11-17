@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         event.preventDefault();
         let spinnerContainer = document.querySelector('.circle-container');
         spinnerContainer.classList.add('active');
-        fetch("api/products", {
+        fetch("/api/products", {
             method: "POST",
             headers: {
                 "Content-type": "application/json; charset=UTF-8"
@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
             .then((json) => {
                 spinnerContainer.classList.remove('active');
                 alert(json.info);
-                location.reload();
+                // location.reload();
             })
             .catch((error) => {
                 spinnerContainer.classList.remove('active');

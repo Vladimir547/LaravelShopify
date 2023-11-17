@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('image');
             $table->text('description');
             $table->float('price');
-            $table->bigInteger('shop_id')->unsigned()->index()->nullable();
-            $table->foreign('shop_id')->references('id')->on('shops');
+            $table->bigInteger('shops_id')->unsigned()->index('shops_id')->nullable();
+            $table->foreign('shops_id', 'shops_products_fk')->references('id')->on('shops');
             $table->timestamps();
         });
     }

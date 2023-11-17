@@ -45,7 +45,7 @@ class updateDb extends Command
                 switch ($shop->platform) {
                     case "Shopify":
                         foreach ($data -> products as $item) {
-                            $match = ['shop_id' => $shop->id, 'sku' => !empty($item->variants[0]->sku) ? $item->variants[0]->sku : $item->title,'external_id' => intval($item->id)];
+                            $match = ['shops_id' => $shop->id, 'sku' => !empty($item->variants[0]->sku) ? $item->variants[0]->sku : $item->title,'external_id' => intval($item->id)];
                             // сохроняем новые записи
                             $test = Product::firstOrCreate ($match, [
                                 'external_id' => intval($item->id),
@@ -54,7 +54,7 @@ class updateDb extends Command
                                 'image' => $item->images[0]->src,
                                 'description' => $item->body_html,
                                 'price' => floatval($item->variants[0]->price),
-                                'shop_id' => $shop->id]);
+                                'shops_id' => $shop->id]);
                         }
                 }
             } catch (\Exception $error) {
