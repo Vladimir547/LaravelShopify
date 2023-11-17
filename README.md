@@ -7,7 +7,7 @@
 1. git clone https://github.com/Vladimir547/LaravelShopify.git
 2. cd LaravelShopify
 3. composer install
-4. npm install
+4. npm install and npm run build
 5. Создать .env из файла .env.example 
 4. php artisan key:generate
 5.  bash ./vendor/laravel/sail/bin/sail up (./vendor/bin/sail up);
