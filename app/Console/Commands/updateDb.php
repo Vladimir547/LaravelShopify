@@ -5,29 +5,32 @@ use Illuminate\Console\Command;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use DB;
-
+/**
+ * Класс для обновления дб
+ */
 class updateDb extends Command
 {
     /**
-     * The name and signature of the console command.
+     * Название артисан команды
      *
      * @var string
      */
     protected $signature = 'app:update-db';
 
     /**
-     * The console command description.
+     * Описание команды.
      *
      * @var string
      */
     protected $description = 'Update db every 5 minutes';
 
     /**
-     * Execute the console command.
+     * выполнение команды
      */
     public function handle()
     {
         $shops = DB::table('shops')->get();
+        //запускаем цикл с магазинами
         foreach ($shops as $shop) {
 
             try {
@@ -35,12 +38,15 @@ class updateDb extends Command
                     'header'=>'User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36 \r\n'.
                         'Connection: close\r\n']
                 ]);
+                // Подключаемся к апи магазина
                 $json = file_get_contents($shop->api,false,$context);
                 $data = json_decode($json);
+                // у каждой платформы, могут быть разные данные. Поэтому проверяем платформу
                 switch ($shop->platform) {
                     case "Shopify":
                         foreach ($data -> products as $item) {
                             $match = ['shop_id' => $shop->id, 'sku' => !empty($item->variants[0]->sku) ? $item->variants[0]->sku : $item->title,'external_id' => intval($item->id)];
+                            // сохроняем новые записи
                             $test = Product::firstOrCreate ($match, [
                                 'external_id' => intval($item->id),
                                 'name' => $item->title,

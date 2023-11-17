@@ -16,7 +16,8 @@ class Kernel extends ConsoleKernel
     ];
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('app:update-db')->everyMinute();
+        //регестрируем команду для планировщика
+        $schedule->command('app:update-db')->everyFiveMinutes();
     }
 
     /**

@@ -10,11 +10,13 @@ use DB;
 class ProductsApiController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @return JsonResponse
      */
     public function index()
     {
         $shops = DB::table('shops')->get();
+        //запускаем цикл с магазинами
+
         foreach ($shops as $shop) {
 
             try {
@@ -22,12 +24,15 @@ class ProductsApiController extends Controller
                     'header'=>'User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36 \r\n'.
                         'Connection: close\r\n']
                 ]);
+                // Подключаемся к апи магазина
                 $json = file_get_contents($shop->api,false,$context);
                 $data = json_decode($json);
+                // у каждой платформы, могут быть разные данные. Поэтому проверяем платформу
                 switch ($shop->platform) {
                     case "Shopify":
                         foreach ($data -> products as $item) {
                             $match = ['shop_id' => $shop->id, 'sku' => !empty($item->variants[0]->sku) ? $item->variants[0]->sku : $item->title,'external_id' => intval($item->id)];
+                            // сохроняем новые записи
                             $test = Product::firstOrCreate ($match, [
                                 'external_id' => intval($item->id),
                                 'name' => $item->title,
