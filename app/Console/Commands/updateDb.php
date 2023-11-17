@@ -5,6 +5,8 @@ use Illuminate\Console\Command;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Log;
+
 /**
  * Класс для обновления дб
  */
@@ -58,8 +60,10 @@ class updateDb extends Command
                         }
                 }
             } catch (\Exception $error) {
+                Log::info($error->getMessage());
                 throw new \Exception($error);
             }
         }
+        Log::info('Task end');
     }
 }

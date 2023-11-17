@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
             .then((json) => {
                 spinnerContainer.classList.remove('active');
                 alert(json.info);
-                // location.reload();
+                location.reload();
             })
             .catch((error) => {
                 spinnerContainer.classList.remove('active');

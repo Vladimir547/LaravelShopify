@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Log;
 
 class ProductsApiController extends Controller
 {
@@ -52,7 +53,7 @@ class ProductsApiController extends Controller
         }
         return response()->json([
             'status' => 200,
-            'info' => 'Evrething is fine'
+            'info' => 'Everything is fine'
         ]);
     }
 
